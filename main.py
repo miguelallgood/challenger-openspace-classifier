@@ -2,6 +2,7 @@
 import sys
 from openspace import Openspace
 
+
 # Prompt the user to enter the Excel file path
 colleagues_filepath = input("Enter the Excel file path: ")
 
