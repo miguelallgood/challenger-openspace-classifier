@@ -52,4 +52,4 @@ class Table:
         for seat in self.seats: # Iterate over each seat and increment the counter for each seat that is not occupied.
             if not seat.is_occupied():
                 count += 1
-                return count
+        return count or 0
