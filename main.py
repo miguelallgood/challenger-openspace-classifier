@@ -1,10 +1,6 @@
 
 import sys
-
 import pandas as pd
-from openspace import Openspace
-
-import sys
 from openspace import Openspace
 
 if __name__ == "__main__":
