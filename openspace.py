@@ -1,9 +1,16 @@
 
 import random
 from table import Table
-import pandas as pd
 
 class Openspace:
+    """
+    Represents an openspace area with multiple tables for seating.
+    
+    Attributes:
+        tables (list): A list of Table objects representing the tables in the openspace.
+        number_of_tables (int): The total number of tables in the openspace.
+    """
+
     def __init__(self, number_of_tables, table_capacity):
         """
         Initializes an Openspace object with a specified number of tables and table capacity.
@@ -12,8 +19,12 @@ class Openspace:
             number_of_tables (int): The number of tables in the Openspace.
             table_capacity (int): The capacity of each table.
         """
-        self.tables = [Table(table_capacity) for _ in range(number_of_tables)]
-        self.number_of_tables = number_of_tables
+        self.tables = []  # Initialize an empty list to store the tables
+
+        # Create each table and add it to the list
+        for _ in range(number_of_tables):
+            table = Table(table_capacity)  # Create a new table with the specified capacity
+            self.tables.append(table)  # Add the table to the list of tables       
 
     def organize(self, names):
         """
@@ -55,21 +66,24 @@ class Openspace:
 
     def store(self, filename):
         """
-        Stores the seating arrangement in an Excel file.
-        
+        Stores the seating arrangement in a CSV file.
+
         Parameters:
-            filename (str): The name of the Excel file to store the seating arrangement.
-        """
-        # Create a dictionary to store table, seat, and occupant data
-        data = {'Table': [], 'Seat': [], 'Occupant': []}
-        
-        # Populate the dictionary with table, seat, and occupant information
-        for i, table in enumerate(self.tables, start=1):
-            for j, seat in enumerate(table.seats, start=1):
-                data['Table'].append(i)
-                data['Seat'].append(j)
-                data['Occupant'].append(seat.occupant if seat.is_occupied() else 'Empty')
-        
-        # Create a DataFrame from the dictionary and store it in an Excel file
-        df = pd.DataFrame(data)
-        df.to_excel(filename, index=False)
+            filename (str): The name of the CSV file to store the seating arrangement.
+        """        
+        # Write the data to a CSV file
+        with open(filename, 'w') as csvfile:
+            # Write the header row
+            csvfile.write("Table,Seat,Occupant\n")           
+            
+            # Initialize counters for table and seat numbers
+            table_number = 1
+                # Write the data rows
+            for table in self.tables:
+                seat_number = 1
+                for seat in table.seats:
+                    occupant = seat.occupant if seat.is_occupied() else 'Empty'
+                    csvfile.write(f"{table_number},{seat_number},{occupant}\n")
+                    seat_number += 1
+                table_number += 1
+            
