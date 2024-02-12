@@ -1,6 +1,6 @@
 
 import random
-from table import Table
+from .table import Table
 
 class Openspace:
     """
